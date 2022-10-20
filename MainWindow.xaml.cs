@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace WpfApp1
 {
@@ -20,21 +21,34 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
-        DeviceSerial arduinoPort;
+        DeviceSerial arduinoSerial;
+        DispatcherTimer dispatcher = new DispatcherTimer();
         public MainWindow()
         {
             InitializeComponent();
-            arduinoPort = new DeviceSerial();
+            arduinoSerial = new DeviceSerial();
+
+            dispatcher.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcher.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            dispatcher.Start();
+
+        }
+
+        private void dispatcherTimer_Tick(object? sender, EventArgs e)
+        {
+            textBox1.Text = arduinoSerial.receiveData;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            arduinoPort.Connect(3);
+            arduinoSerial.Connect(3);
+            
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            arduinoPort.Close();
+            arduinoSerial.Close();
+            dispatcher.Stop();
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)

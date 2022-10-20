@@ -10,7 +10,7 @@ namespace WpfApp1
     class DeviceSerial
     {
         SerialPort serialPort = new SerialPort();
-        string receiveData = "";
+        public string receiveData = "";
 
         public bool Connect(int portName, int baudRate = (int)9600, int DateBits = (int)8, Parity parity = Parity.None, StopBits stopBits = StopBits.One)
         {
@@ -24,7 +24,7 @@ namespace WpfApp1
               
                 serialPort.Open();
                 serialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceiveHandler);
-                serialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceiveHandler2);
+//                serialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceiveHandler2);
             }
            
             return true;
