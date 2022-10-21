@@ -22,27 +22,26 @@ namespace WpfApp1
     public partial class MainWindow : Window
     {
         DeviceSerial arduinoSerial;
+
         DispatcherTimer dispatcher = new DispatcherTimer();
+
         public MainWindow()
         {
             InitializeComponent();
             arduinoSerial = new DeviceSerial();
-
             dispatcher.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcher.Interval = new TimeSpan(0, 0, 0, 0, 100);
             dispatcher.Start();
-
         }
 
         private void dispatcherTimer_Tick(object? sender, EventArgs e)
         {
-            textBox1.Text = arduinoSerial.receiveData;
+            textBox1.Text = arduinoSerial.ReceiveData;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             arduinoSerial.Connect(3);
-            
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -50,8 +49,12 @@ namespace WpfApp1
             arduinoSerial.Close();
             dispatcher.Stop();
         }
-
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
         }
